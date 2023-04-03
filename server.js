@@ -16,14 +16,19 @@ MongoClient.connect(dbConnectionString, { useUnifiedTopology: true })
 		console.log(`Connected to Database ${dbName}`);
 
 		// middleware
-		// Body-parser is a middleware. They help to tidy up the request object before we use them. Express lets us use middleware with the use method.
-		// The urlencoded method within body-parser tells body-parser to extract data from the <form> element and add them to the body property in the request object.
 		app.use(bodyParser.urlencoded({ extended: true }));
 
+
 		app.get("/", (req, res) => {
-			res.sendFile(__dirname + "/index.html");
-			//console.log(__dirname);
-			// Note: __dirname is the current directory you're in. Try logging it and see what you get!
+			const cursor = db.collection("quotes").find();
+			console.log(cursor);
+			db.collection("quotes")
+				.find()
+				.toArray()
+				.then((results) => {
+					console.log(results);
+				})
+				.catch((error) => console.error(error));
 		});
 
 		app.post("/quotes", (req, res) => {
@@ -35,6 +40,7 @@ MongoClient.connect(dbConnectionString, { useUnifiedTopology: true })
 				})
 				.catch((error) => console.error(error));
 		});
+
 		/// creates a server that the browser can connect to
 		app.listen(3000, function () {
 			console.log("listening on 3000");
