@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>APP</title>
+	</head>
+	<body>
+		<h1>May the node and express be with you</h1>
+
+		<!-- Browsers can only perform a CREATE operation if they send POST request to the server. This POST request can be triggered through JavaScript or through a <form> element. -->
+		<form action="/quotes" method="POST">
+			<!-- The method tells browsers what kind of request to send. In this case, we use POST because we’re sending a POST request.The action attribute tells the browser where to send the POST request. In this case, we’re send the POST request to /quotes.We can handle this POST request with a post method in server.js. The path path should be the value you placed in the action attribute. -->
+			<input type="text" placeholder="name" name="name" />
+			<input type="text" placeholder="quote" name="quote" />
+			<button type="submit">Submit</button>
+		</form>
+	</body>
+</html>
