@@ -15,9 +15,10 @@ MongoClient.connect(dbConnectionString, { useUnifiedTopology: true })
 		const quotesCollection = db.collection("quotes");
 		console.log(`Connected to Database ${dbName}`);
 
+		app.set("view engine", "ejs");
 		// middleware
-		app.use(bodyParser.urlencoded({ extended: true }));
 
+		app.use(bodyParser.urlencoded({ extended: true }));
 
 		app.get("/", (req, res) => {
 			const cursor = db.collection("quotes").find();
@@ -26,6 +27,8 @@ MongoClient.connect(dbConnectionString, { useUnifiedTopology: true })
 				.find()
 				.toArray()
 				.then((results) => {
+					// renders quotes and results on thge screen
+					res.render("index.ejs", { quotes: results });
 					console.log(results);
 				})
 				.catch((error) => console.error(error));
