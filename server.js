@@ -2,15 +2,23 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+require("dotenv").config();
 // Body-parser is a middleware. They help to tidy up the request object before we use them. Express lets us use middleware with the use method.
 // The urlencoded method within body-parser tells body-parser to extract data from the <form> element and add them to the body property in the request object.
 app.use(bodyParser.urlencoded({ extended: true }));
+
 const MongoClient = require("mongodb").MongoClient;
+let dbConnectionString = process.env.DB_String,
+	dbName = "star-wars",
+	collection;
 // allows us to connect to Mongo's client
-MongoClient.connect(connectionString, (err, client) => {
-	if (err) return console.error(error);
-	console.log("connected to db");
-});
+MongoClient.connect(dbConnectionString)
+	//allows us to connect to mongodb. Pass the connection string so it knows what DB to use
+	.then((client) => {
+		console.log("Connected to Database");
+		db = client.db(dbName);
+		collection = db.collection("quotes");
+	});
 
 app.get("/", (req, res) => {
 	res.sendFile(__dirname + "/index.html");
